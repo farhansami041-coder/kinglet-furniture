@@ -14,12 +14,25 @@ router.use(requireAuth);
  * Helper to get or create Customer record for authenticated User
  */
 async function getOrCreateCustomer(user) {
-  let customer = await prisma.customer.findUnique({
-    where: { userId: user.id },
+  let customer = await prisma.customer.findFirst({
+    where: {
+      OR: [
+        { userId: user.id },
+        { phone: user.phone },
+      ],
+    },
     include: { addresses: true },
   });
 
-  if (!customer) {
+  if (customer) {
+    if (!customer.userId) {
+      customer = await prisma.customer.update({
+        where: { id: customer.id },
+        data: { userId: user.id },
+        include: { addresses: true },
+      });
+    }
+  } else {
     customer = await prisma.customer.create({
       data: {
         userId: user.id,
@@ -92,6 +105,10 @@ router.put("/profile", async (req, res, next) => {
       fullName: z.string().min(2, "Full name must be at least 2 characters").optional(),
       email: z.string().email("Invalid email format").optional().or(z.literal("")),
       avatarUrl: z.string().url("Invalid image URL").optional().nullable(),
+      address: z.string().optional().nullable(),
+      division: z.string().optional().nullable(),
+      district: z.string().optional().nullable(),
+      thana: z.string().optional().nullable(),
     });
 
     const data = profileSchema.parse(req.body);
@@ -99,9 +116,9 @@ router.put("/profile", async (req, res, next) => {
     const updatedUser = await prisma.user.update({
       where: { id: req.user.id },
       data: {
-        fullName: data.fullName,
-        email: data.email || null,
-        avatarUrl: data.avatarUrl || null,
+        ...(data.fullName ? { fullName: data.fullName } : {}),
+        ...(data.email !== undefined ? { email: data.email || null } : {}),
+        ...(data.avatarUrl !== undefined ? { avatarUrl: data.avatarUrl || null } : {}),
       },
       select: {
         id: true,
@@ -112,20 +129,67 @@ router.put("/profile", async (req, res, next) => {
       },
     });
 
-    // Sync Customer model
-    await prisma.customer.upsert({
-      where: { userId: req.user.id },
-      update: {
-        fullName: updatedUser.fullName,
-        email: updatedUser.email,
-      },
-      create: {
-        userId: req.user.id,
-        fullName: updatedUser.fullName,
-        phone: updatedUser.phone,
-        email: updatedUser.email,
+    // Sync Customer model safely without duplicate phone key error
+    let customer = await prisma.customer.findFirst({
+      where: {
+        OR: [
+          { userId: req.user.id },
+          { phone: updatedUser.phone },
+        ],
       },
     });
+
+    if (customer) {
+      customer = await prisma.customer.update({
+        where: { id: customer.id },
+        data: {
+          userId: req.user.id,
+          fullName: updatedUser.fullName,
+          email: updatedUser.email,
+        },
+      });
+    } else {
+      customer = await prisma.customer.create({
+        data: {
+          userId: req.user.id,
+          fullName: updatedUser.fullName,
+          phone: updatedUser.phone,
+          email: updatedUser.email,
+        },
+      });
+    }
+
+    // If address info provided, add or update default customer address
+    if (data.address && data.address.trim()) {
+      const existingAddr = await prisma.customerAddress.findFirst({
+        where: { customerId: customer.id, isDefault: true },
+      });
+
+      if (existingAddr) {
+        await prisma.customerAddress.update({
+          where: { id: existingAddr.id },
+          data: {
+            streetAddress: data.address.trim(),
+            division: data.division || existingAddr.division,
+            district: data.district || existingAddr.district,
+            thana: data.thana || existingAddr.thana,
+          },
+        });
+      } else {
+        await prisma.customerAddress.create({
+          data: {
+            customerId: customer.id,
+            recipientName: updatedUser.fullName,
+            phone: updatedUser.phone,
+            division: data.division || "Dhaka",
+            district: data.district || "Dhaka City",
+            thana: data.thana || "Mirpur",
+            streetAddress: data.address.trim(),
+            isDefault: true,
+          },
+        });
+      }
+    }
 
     return sendSuccess(res, updatedUser, "Profile updated successfully!");
   } catch (err) {

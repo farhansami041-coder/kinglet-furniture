@@ -182,30 +182,30 @@ export default function AccountPage() {
     e.preventDefault();
     setAuthError("");
 
-    if (!regForm.fullName.trim()) {
+    const cleanFullName = regForm.fullName.trim();
+    const cleanPhone = regForm.phone.replace(/[-\s+()]/g, "").replace(/^880/, "0");
+    const cleanAddress = regForm.address.trim();
+
+    if (!cleanFullName) {
       setAuthError("Please enter your full name.");
       return;
     }
-    if (!regForm.phone.trim() || regForm.phone.trim().length < 10) {
-      setAuthError("Please enter a valid Bangladeshi phone number (e.g. 01712345678).");
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setAuthError("Please enter a valid Bangladeshi mobile number (e.g. 017XXXXXXXX).");
       return;
     }
-    if (!regForm.address.trim()) {
+    if (!cleanAddress) {
       setAuthError("Please enter your full delivery address (House, Road, Area).");
       return;
     }
 
     try {
       const data = await apiRegisterCustomer({
-        fullName: regForm.fullName.trim(),
-        phone: regForm.phone.trim(),
-        password: regForm.password || "KingletPass@123",
-        email: regForm.email || undefined,
-      });
-
-      await apiUpdateCustomerProfile({
-        fullName: regForm.fullName.trim(),
-        address: regForm.address.trim(),
+        fullName: cleanFullName,
+        phone: cleanPhone,
+        password: regForm.password && regForm.password.trim().length >= 4 ? regForm.password.trim() : "KingletPass@123",
+        email: regForm.email && regForm.email.trim() ? regForm.email.trim() : undefined,
+        address: cleanAddress,
         division: regForm.division,
         district: regForm.district,
         thana: regForm.thana,

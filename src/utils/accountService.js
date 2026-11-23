@@ -370,16 +370,20 @@ export function setCustomerToken(token) {
   }
 }
 
-export async function apiRegisterCustomer({ fullName, phone, password, email }) {
+export async function apiRegisterCustomer({ fullName, phone, password, email, address, division, district, thana }) {
   try {
     const res = await fetch("/api/v1/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullName, phone, password, email }),
+      body: JSON.stringify({ fullName, phone, password, email, address, division, district, thana }),
     });
     const data = await res.json();
     if (!res.ok || !data.success) {
-      throw new Error(data.message || "Registration failed");
+      const errorMsg =
+        data.errors?.[0]?.message ||
+        data.message ||
+        "Registration failed. Please verify your details.";
+      throw new Error(errorMsg);
     }
     setCustomerToken(data.data.token);
     saveUser(data.data.user);
@@ -389,7 +393,7 @@ export async function apiRegisterCustomer({ fullName, phone, password, email }) 
     if (err.message && !err.message.includes("failed to fetch") && !err.message.includes("NetworkError")) {
       throw err;
     }
-    const localUser = saveUser({ fullName, phone, email });
+    const localUser = saveUser({ fullName, phone, email, address, division, district, thana });
     return { user: localUser, token: "local-token-" + Date.now() };
   }
 }
