@@ -1,0 +1,39 @@
+# Kinglet Bangladesh Ltd - Production Robots.txt for Search Engine Crawlers
+# Official Canonical Domain: https://www.kingletbd.com/
+
+User-agent: *
+Allow: /
+Allow: /category/
+Allow: /product/
+Allow: /flash-sale
+Allow: /offers
+Allow: /interior
+Allow: /showrooms
+Allow: /warranty-care
+Allow: /faq
+Allow: /about-us
+Allow: /privacy-policy
+Allow: /warranty-terms
+Allow: /exchange-return
+Allow: /delivery
+Allow: /care-maintenance
+Allow: /contact
+
+# Private User Sessions, Cart & Checkout (Disallow indexing)
+Disallow: /admin
+Disallow: /admin/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /order-confirmation/
+Disallow: /account
+Disallow: /login
+Disallow: /register
+Disallow: /track-order
+
+# Internal parameter filters & search queries to avoid duplicate content
+Disallow: /*?search=*
+Disallow: /*&search=*
+
+# XML Sitemap
+Sitemap: https://www.kingletbd.com/sitemap.xml
