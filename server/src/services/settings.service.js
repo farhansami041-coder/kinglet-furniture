@@ -66,7 +66,7 @@ export const DEFAULT_SYSTEM_SETTINGS = [
   },
   {
     key: "primary_phone",
-    value: "+8801676900442",
+    value: "+880 1898-878815",
     group: "general",
     description: "Official 24/7 hotline telephone number",
   },
@@ -78,7 +78,7 @@ export const DEFAULT_SYSTEM_SETTINGS = [
   },
   {
     key: "whatsapp_number",
-    value: "+8801676900442",
+    value: "+880 1898-878815",
     group: "general",
     description: "Official WhatsApp concierge number for direct ordering and consultation",
   },
@@ -964,7 +964,7 @@ export const settingsService = {
 
     return {
       primary_phone: map.primary_phone || "+8801676900442",
-      whatsapp_number: map.whatsapp_number || "+8801676900442",
+      whatsapp_number: map.whatsapp_number || "+880 1898-878815",
       footer_phone: map.footer_phone || map.primary_phone || "+8801676900442",
       primary_email: map.primary_email || "info.kingletbd@gmail.com",
       showroom_address: map.showroom_address || "752/2, West Shewrapara, Begum Rokeya Sarani, Mirpur, Dhaka-1216",

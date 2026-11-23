@@ -116,7 +116,7 @@ export function GeneralSettingsTab({ settings, onSave, saving }) {
 
     // Direct Hotlines & Contact Numbers
     primary_phone: getSettingValue(settings, "primary_phone", "+8801676900442"),
-    whatsapp_number: getSettingValue(settings, "whatsapp_number", "+8801676900442"),
+    whatsapp_number: getSettingValue(settings, "whatsapp_number", "+880 1898-878815"),
 
     // Footer & Contact Page - Basic
     footer_address: getSettingValue(
@@ -193,7 +193,7 @@ export function GeneralSettingsTab({ settings, onSave, saving }) {
         emi_tenures_available: getSettingValue(settings, "emi_tenures_available", prev.emi_tenures_available || "3,6,9,12,18,24,30,36"),
         emi_rates_json: getSettingValue(settings, "emi_rates_json", prev.emi_rates_json),
         primary_phone: getSettingValue(settings, "primary_phone", prev.primary_phone || "+8801676900442"),
-        whatsapp_number: getSettingValue(settings, "whatsapp_number", prev.whatsapp_number || "+8801676900442"),
+        whatsapp_number: getSettingValue(settings, "whatsapp_number", prev.whatsapp_number || "+880 1898-878815"),
         footer_address: getSettingValue(settings, "footer_address", prev.footer_address),
         footer_phone: getSettingValue(settings, "footer_phone", prev.footer_phone),
         footer_email: getSettingValue(settings, "footer_email", prev.footer_email),
@@ -255,7 +255,7 @@ export function GeneralSettingsTab({ settings, onSave, saving }) {
     if (e) e.preventDefault();
     try {
       const cleanPhone = (form.primary_phone || (form.footer_phone ? form.footer_phone.split(",")[0].trim() : "+8801676900442")).trim();
-      const cleanWhatsapp = (form.whatsapp_number || "+8801676900442").trim();
+      const cleanWhatsapp = (form.whatsapp_number || "+880 1898-878815").trim();
 
       // Also map mirrored fields so storefront components reading showroom_address, primary_phone, etc. get updated
       const payload = {
@@ -507,7 +507,7 @@ export function GeneralSettingsTab({ settings, onSave, saving }) {
                   <input
                     type="text"
                     required
-                    placeholder="+8801676900442"
+                    placeholder="+880 1898-878815"
                     value={form.whatsapp_number}
                     onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value })}
                     style={{
@@ -1371,7 +1371,7 @@ export function GeneralSettingsTab({ settings, onSave, saving }) {
                   <input
                     type="text"
                     required
-                    placeholder="+8801676900442"
+                    placeholder="+880 1898-878815"
                     value={form.whatsapp_number}
                     onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value })}
                     style={{ width: "100%", padding: "10px 14px", border: "1px solid #cbd5e1", borderRadius: "6px", fontSize: "13px", boxSizing: "border-box", background: "#ffffff" }}

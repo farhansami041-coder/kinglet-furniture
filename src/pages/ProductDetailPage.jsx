@@ -1647,7 +1647,7 @@ export default function ProductDetailPage({
                   <div className="pdp-contact-grid">
                     {/* Live Showroom WhatsApp Video Inspection */}
                     <a
-                      href={`https://wa.me/${contactSettings.cleanWhatsapp || "8801676900442"}?text=${encodeURIComponent(
+                      href={`https://wa.me/${contactSettings.cleanWhatsapp || "8801898878815"}?text=${encodeURIComponent(
                         `Hello Kinglet Furniture, I want to inspect real showroom photos and live video of: ${product.name}\n` +
                         `• Material: ${fixedWood}\n` +
                         `• Dimensions: ${fixedDimension}\n` +

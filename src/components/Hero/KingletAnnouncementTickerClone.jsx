@@ -6,7 +6,7 @@ export default function KingletAnnouncementTickerClone() {
       <div className="container" style={{ maxWidth: "1420px", margin: "0 auto", padding: "0 20px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
           <span style={{ color: "#ec2226", fontWeight: "700" }}>✨ FLASH SALE:</span>
-          <span>Enjoy Nationwide Delivery &amp; Professional Carpenter Assembly on all Handcrafted Suites! Call Hotline: <strong>+8801676900442</strong></span>
+          <span>Enjoy Nationwide Delivery &amp; Professional Carpenter Assembly on all Handcrafted Suites! Call Hotline: <strong>+880 1898-878815</strong></span>
         </div>
       </div>
     </div>

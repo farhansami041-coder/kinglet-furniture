@@ -484,7 +484,7 @@ function AppInner() {
             {siteSettings.maintenance_mode_message || "We are currently optimizing our timber manufacturing inventory, custom dimension engine, and showroom reservations. We will be back online shortly."}
           </p>
           <div style={{ background: "#1f2937", padding: "16px", borderRadius: "10px", fontSize: "13px", color: "#d1d5db", marginBottom: "24px" }}>
-            <div>📞 Direct Concierge: <strong style={{ color: "#ef4444" }}>{siteSettings.primary_phone || "+8801676900442"}</strong></div>
+            <div>📞 Direct Concierge: <strong style={{ color: "#ef4444" }}>{siteSettings.primary_phone || "+880 1898-878815"}</strong></div>
             <div style={{ marginTop: "4px", fontSize: "12px", color: "#9ca3af" }}>📍 Mirpur Showroom: {siteSettings.showroom_address || "752/2 West Shewrapara, Mirpur, Dhaka"}</div>
           </div>
           <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
@@ -571,11 +571,11 @@ function AppInner() {
                 Under Scheduled Upgrades
               </h1>
               <p style={{ fontSize: "15px", color: "#94a3b8", lineHeight: 1.6, marginBottom: "24px" }}>
-                {siteSettings.maintenance_message || "We are currently upgrading Kinglet's timber catalog and online showroom. We will be back online shortly. For urgent inquiries, call: +8801676900442."}
+                {siteSettings.maintenance_message || "We are currently upgrading Kinglet's timber catalog and online showroom. We will be back online shortly. For urgent inquiries, call: +880 1898-878815."}
               </p>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
                 <a
-                  href={`tel:${siteSettings.primary_phone || "+8801676900442"}`}
+                  href={`tel:${siteSettings.primary_phone || "+880 1898-878815"}`}
                   style={{
                     padding: "10px 20px",
                     background: "#ec2226",
@@ -586,7 +586,7 @@ function AppInner() {
                     fontSize: "14px",
                   }}
                 >
-                  📞 Call Hotline: {siteSettings.primary_phone || "+8801676900442"}
+                  📞 Call Hotline: {siteSettings.primary_phone || "+880 1898-878815"}
                 </a>
                 <a
                   href="/admin"

@@ -51,7 +51,7 @@ const settingsToSeed = [
   { key: "facebook_url", value: "https://www.facebook.com/kingletbd", group: "social" },
   { key: "youtube_url", value: "https://www.youtube.com/@kingletbd", group: "social" },
   { key: "instagram_url", value: "https://www.instagram.com/kingletbd", group: "social" },
-  { key: "whatsapp_number", value: "+8801676900442", group: "social" },
+  { key: "whatsapp_number", value: "+880 1898-878815", group: "social" },
   { key: "twitter_url", value: "https://twitter.com/kingletbd", group: "social" },
   { key: "linkedin_url", value: "https://www.linkedin.com/company/kingletbd", group: "social" },
   { key: "tiktok_url", value: "https://www.tiktok.com/@kingletbd", group: "social" },

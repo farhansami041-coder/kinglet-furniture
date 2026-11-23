@@ -226,7 +226,7 @@ export default function KingletFooter({ _onOpenConsultation, onSelectCategory, o
 
               <div style={{ display: "flex", gap: "10px" }}>
                 <Phone size={16} color="#ec2226" style={{ flexShrink: 0, marginTop: "2px" }} />
-                <span>+8801676900442, 01707073414, 01771776270</span>
+                <span>+880 1898-878815, 01707073414, 01771776270</span>
               </div>
 
               <div style={{ display: "flex", gap: "10px" }}>

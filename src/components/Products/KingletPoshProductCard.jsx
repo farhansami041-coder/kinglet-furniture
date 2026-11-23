@@ -41,7 +41,7 @@ export default function KingletPoshProductCard({
 
   const emi12m = calculateEmi(priceNum, 12);
 
-  const cleanWhatsappNumber = (BRAND_INFO?.whatsapp || "+8801676900442").replace(/\D/g, "");
+  const cleanWhatsappNumber = (BRAND_INFO?.whatsapp || "+880 1898-878815").replace(/\D/g, "");
   const whatsappMessage = encodeURIComponent(
     `Hello Kinglet Furniture, I am interested in ordering: "${product.name}" (৳${priceNum.toLocaleString()}). Please confirm stock and delivery details.`
   );

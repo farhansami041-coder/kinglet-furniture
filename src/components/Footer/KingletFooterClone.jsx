@@ -287,12 +287,12 @@ export default function KingletFooterClone() {
               <div style={{ fontSize: "11px", fontWeight: "750", color: "#64748b", textTransform: "uppercase", marginBottom: "4px" }}>
                 Dedicated Support Call
               </div>
-              <a href="tel:+8801676900442" className="kinglet-footer-hotline">
-                +8801676900442
+              <a href={`tel:${(currentPhone || "+880 1898-878815").replace(/[^0-9+]/g, "")}`} className="kinglet-footer-hotline">
+                {currentPhone || "+880 1898-878815"}
               </a>
               <div style={{ marginTop: "10px" }}>
                 <a
-                  href={`https://wa.me/${BRAND_INFO.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hello Kinglet! I would like to inquire about furniture.")}`}
+                  href={`https://wa.me/${(currentWhatsapp || "+880 1898-878815").replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hello Kinglet! I would like to inquire about furniture.")}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{

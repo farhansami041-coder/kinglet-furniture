@@ -7,8 +7,8 @@ import { BRAND_INFO } from "../data/kingletData";
 export function getContactSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem("kinglet_site_settings") || "{}");
-    const phone = (saved.primary_phone || saved.footer_phone || BRAND_INFO.hotlinePrimary || "+8801676900442").trim();
-    const whatsapp = (saved.whatsapp_number || BRAND_INFO.whatsapp || "+8801676900442").trim();
+    const phone = (saved.primary_phone || saved.footer_phone || BRAND_INFO.hotlinePrimary || "+880 1898-878815").trim();
+    const whatsapp = (saved.whatsapp_number || BRAND_INFO.whatsapp || "+880 1898-878815").trim();
     const cleanWhatsapp = whatsapp.replace(/\D/g, "");
 
     return {
@@ -19,8 +19,8 @@ export function getContactSettings() {
       whatsappUrl: `https://wa.me/${cleanWhatsapp}`,
     };
   } catch {
-    const defaultPhone = BRAND_INFO.hotlinePrimary || "+8801676900442";
-    const defaultWhatsapp = BRAND_INFO.whatsapp || "+8801676900442";
+    const defaultPhone = BRAND_INFO.hotlinePrimary || "+880 1898-878815";
+    const defaultWhatsapp = BRAND_INFO.whatsapp || "+880 1898-878815";
     const cleanWhatsapp = defaultWhatsapp.replace(/\D/g, "");
     return {
       phone: defaultPhone,
@@ -43,8 +43,8 @@ export function useContactSettings() {
 
     const applyData = (data) => {
       if (!data) return;
-      const phone = (data.primary_phone || data.footer_phone || BRAND_INFO.hotlinePrimary || "+8801676900442").trim();
-      const whatsapp = (data.whatsapp_number || BRAND_INFO.whatsapp || "+8801676900442").trim();
+      const phone = (data.primary_phone || data.footer_phone || BRAND_INFO.hotlinePrimary || "+880 1898-878815").trim();
+      const whatsapp = (data.whatsapp_number || BRAND_INFO.whatsapp || "+880 1898-878815").trim();
       const cleanWhatsapp = whatsapp.replace(/\D/g, "");
 
       if (isMounted) {

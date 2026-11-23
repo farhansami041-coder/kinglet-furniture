@@ -488,7 +488,7 @@ export default function KingletEmiModal({ product = null, onClose }) {
           {/* Contact Concierge Action */}
           <div style={{ display: "flex", gap: "10px" }}>
             <a
-              href="https://wa.me/8801676900442?text=Hello%20Kinglet,%20I%20want%20to%20avail%20Bank%20EMI%20for%20furniture"
+              href="https://wa.me/8801898878815?text=Hello%20Kinglet,%20I%20want%20to%20avail%20Bank%20EMI%20for%20furniture"
               target="_blank"
               rel="noreferrer"
               style={{
@@ -507,7 +507,7 @@ export default function KingletEmiModal({ product = null, onClose }) {
                 boxShadow: "0 2px 8px rgba(37,211,102,0.3)",
               }}
             >
-              <span>Instant WhatsApp Assistance (+8801676-900442)</span>
+              <span>Instant WhatsApp Assistance (+880 1898-878815)</span>
             </a>
             <button
               onClick={onClose}
