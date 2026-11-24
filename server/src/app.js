@@ -103,6 +103,44 @@ app.get("/health", (req, res) => {
   });
 });
 
+// Root Welcome & Navigation Page
+app.get("/", (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kinglet Furniture API & Platform</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 50px 20px; text-align: center; }
+    .card { max-width: 540px; margin: 0 auto; background: #1e293b; border-radius: 14px; padding: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 1px solid #334155; }
+    h1 { color: #f8fafc; margin: 8px 0 12px; font-size: 24px; font-weight: 800; }
+    p { color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
+    .btn-group { display: flex; flex-direction: column; gap: 10px; }
+    .btn { display: block; padding: 12px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: all 0.2s; }
+    .btn-primary { background: #ec2226; color: #fff; }
+    .btn-primary:hover { background: #d71e22; }
+    .btn-secondary { background: #334155; color: #f1f5f9; }
+    .btn-secondary:hover { background: #475569; }
+    .status { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #22c55e; margin-bottom: 8px; }
+    .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="status"><span class="dot"></span> Kinglet Backend API is Online (Port 5000)</div>
+    <h1>Kinglet Furniture Platform</h1>
+    <p>Backend API server is running smoothly on port 5000. Click below to view the storefront website or explore API endpoints:</p>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="http://localhost:5174/">🛍️ Open Website Storefront (Port 5174)</a>
+      <a class="btn btn-secondary" href="http://localhost:5174/admin">⚙️ Open Admin Dashboard</a>
+      <a class="btn btn-secondary" href="/health">📡 API Health Status (/health)</a>
+      <a class="btn btn-secondary" href="/api/v1/products">📦 Products API (/api/v1/products)</a>
+    </div>
+  </div>
+</body>
+</html>`);
+});
+
 // Dynamic 301 / 302 Redirection Middleware for Permanently Changed URLs
 app.use(async (req, res, next) => {
   if (req.method === "GET" && !req.path.startsWith("/api/") && !req.path.startsWith("/storage/")) {
