@@ -88,6 +88,17 @@ app.use(
   })
 );
 
+app.use(
+  "/storage",
+  express.static(path.resolve("storage"), {
+    maxAge: "30d",
+    setHeaders: (res) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader("Cache-Control", "public, max-age=2592000, immutable");
+    },
+  })
+);
+
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }

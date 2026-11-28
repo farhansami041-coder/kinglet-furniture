@@ -8,27 +8,29 @@ import KingletMobileBottomNav from "./components/Header/KingletMobileBottomNav";
 import KingletCookieConsentClone from "./components/Consultation/KingletCookieConsentClone";
 import KingletCartDrawer from "./components/Cart/KingletCartDrawer";
 import KingletWishlistDrawer from "./components/Wishlist/KingletWishlistDrawer";
-import KingletCompareDrawer from "./components/Compare/KingletCompareDrawer";
-import KingletProductModal from "./components/Products/KingletProductModal";
 import KingletCursor from "./components/Cursor/KingletCursor";
-import KingletEmiModal from "./components/Finance/KingletEmiModal";
-import KingletShowroomBookingModal from "./components/Showrooms/KingletShowroomBookingModal";
-import KingletCustomDimensionsModal from "./components/Consultation/KingletCustomDimensionsModal";
 import KingletScrollWaveController from "./components/Common/KingletScrollWaveController";
 import ErrorBoundary from "./components/Common/ErrorBoundary";
 import { getCurrentUser, apiGetCustomerWishlist, apiSyncCustomerWishlist } from "./utils/accountService";
 
-// Admin Management Portal
-import AdminLayout from "./pages/admin/AdminLayout";
-import AdminLoginPage from "./pages/admin/AdminLoginPage";
-import AdminDashboardOverview from "./pages/admin/AdminDashboardOverview";
-import AdminProductsPage from "./pages/admin/AdminProductsPage";
-import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
-import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
-import AdminContentPage from "./pages/admin/AdminContentPage";
-import AdminInventoryPage from "./pages/admin/AdminInventoryPage";
-import AdminCouponsPage from "./pages/admin/AdminCouponsPage";
-import AdminSeoPage from "./pages/admin/AdminSeoPage";
+// Heavy On-Demand Modals & Drawers (Code-Split for Light Initial Bundle)
+const KingletCompareDrawer = React.lazy(() => import("./components/Compare/KingletCompareDrawer"));
+const KingletProductModal = React.lazy(() => import("./components/Products/KingletProductModal"));
+const KingletEmiModal = React.lazy(() => import("./components/Finance/KingletEmiModal"));
+const KingletShowroomBookingModal = React.lazy(() => import("./components/Showrooms/KingletShowroomBookingModal"));
+const KingletCustomDimensionsModal = React.lazy(() => import("./components/Consultation/KingletCustomDimensionsModal"));
+
+// Admin Management Portal (Code-Split for 100% Storefront Performance)
+const AdminLayout = React.lazy(() => import("./pages/admin/AdminLayout"));
+const AdminLoginPage = React.lazy(() => import("./pages/admin/AdminLoginPage"));
+const AdminDashboardOverview = React.lazy(() => import("./pages/admin/AdminDashboardOverview"));
+const AdminProductsPage = React.lazy(() => import("./pages/admin/AdminProductsPage"));
+const AdminOrdersPage = React.lazy(() => import("./pages/admin/AdminOrdersPage"));
+const AdminCategoriesPage = React.lazy(() => import("./pages/admin/AdminCategoriesPage"));
+const AdminContentPage = React.lazy(() => import("./pages/admin/AdminContentPage"));
+const AdminInventoryPage = React.lazy(() => import("./pages/admin/AdminInventoryPage"));
+const AdminCouponsPage = React.lazy(() => import("./pages/admin/AdminCouponsPage"));
+const AdminSeoPage = React.lazy(() => import("./pages/admin/AdminSeoPage"));
 
 // Pages (HomePage eagerly loaded for instant LCP, secondary routes code-split)
 import HomePage from "./pages/HomePage";
@@ -817,47 +819,49 @@ function AppInner() {
                 onRemoveItem={handleRemoveFromWishlist}
               />
             )}
-            {featureVisibility.enableCompare !== false && (
-              <KingletCompareDrawer
-                isOpen={isCompareOpen}
-                onClose={() => setIsCompareOpen(false)}
-                compareItems={compareItems}
-                onToggleCompare={handleToggleCompare}
-                onRemoveFromCompare={handleRemoveFromCompare}
-                onRemoveItem={handleRemoveFromCompare}
-                onAddToCart={handleAddToCart}
-              />
-            )}
-            {featureVisibility.enableQuickView !== false && quickViewProduct && (
-              <KingletProductModal
-                product={quickViewProduct}
-                onClose={() => setQuickViewProduct(null)}
-                onAddToCart={handleAddToCart}
-                onToggleWishlist={handleToggleWishlist}
-                isWishlisted={wishlistIds.some((wid) => String(wid) === String(quickViewProduct.id))}
-                onToggleCompare={handleToggleCompare}
-                isCompared={compareItems.some((ci) => String(ci.id) === String(quickViewProduct.id))}
-                onOpenEmi={(p) => setEmiProduct(p || quickViewProduct)}
-                onOpenCustomSizing={(p) => setCustomSizingProduct(p || quickViewProduct)}
-              />
-            )}
-            {featureVisibility.enableEmiModal !== false && emiProduct && (
-              <KingletEmiModal
-                product={emiProduct}
-                onClose={() => setEmiProduct(null)}
-              />
-            )}
-            {isShowroomModalOpen && (
-              <KingletShowroomBookingModal
-                onClose={() => setIsShowroomModalOpen(false)}
-              />
-            )}
-            {featureVisibility.enableCustomSizingModal !== false && customSizingProduct && (
-              <KingletCustomDimensionsModal
-                product={customSizingProduct}
-                onClose={() => setCustomSizingProduct(null)}
-              />
-            )}
+            <React.Suspense fallback={null}>
+              {featureVisibility.enableCompare !== false && (
+                <KingletCompareDrawer
+                  isOpen={isCompareOpen}
+                  onClose={() => setIsCompareOpen(false)}
+                  compareItems={compareItems}
+                  onToggleCompare={handleToggleCompare}
+                  onRemoveFromCompare={handleRemoveFromCompare}
+                  onRemoveItem={handleRemoveFromCompare}
+                  onAddToCart={handleAddToCart}
+                />
+              )}
+              {featureVisibility.enableQuickView !== false && quickViewProduct && (
+                <KingletProductModal
+                  product={quickViewProduct}
+                  onClose={() => setQuickViewProduct(null)}
+                  onAddToCart={handleAddToCart}
+                  onToggleWishlist={handleToggleWishlist}
+                  isWishlisted={wishlistIds.some((wid) => String(wid) === String(quickViewProduct.id))}
+                  onToggleCompare={handleToggleCompare}
+                  isCompared={compareItems.some((ci) => String(ci.id) === String(quickViewProduct.id))}
+                  onOpenEmi={(p) => setEmiProduct(p || quickViewProduct)}
+                  onOpenCustomSizing={(p) => setCustomSizingProduct(p || quickViewProduct)}
+                />
+              )}
+              {featureVisibility.enableEmiModal !== false && emiProduct && (
+                <KingletEmiModal
+                  product={emiProduct}
+                  onClose={() => setEmiProduct(null)}
+                />
+              )}
+              {isShowroomModalOpen && (
+                <KingletShowroomBookingModal
+                  onClose={() => setIsShowroomModalOpen(false)}
+                />
+              )}
+              {featureVisibility.enableCustomSizingModal !== false && customSizingProduct && (
+                <KingletCustomDimensionsModal
+                  product={customSizingProduct}
+                  onClose={() => setCustomSizingProduct(null)}
+                />
+              )}
+            </React.Suspense>
 
             {/* Dynamic Storefront Announcement */}
             {siteSettings.announcement_enabled === "true" && !announcementDismissed && !isAdmin && (

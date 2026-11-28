@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     cssCodeSplit: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -17,6 +19,15 @@ export default defineConfig({
           }
           if (id.includes('node_modules/lenis')) {
             return 'vendor-lenis';
+          }
+          if (id.includes('node_modules/canvas-confetti')) {
+            return 'vendor-confetti';
+          }
+          if (id.includes('src/pages/admin/')) {
+            return 'vendor-admin';
+          }
+          if (id.includes('src/data/kingletData')) {
+            return 'vendor-catalog';
           }
         },
       },

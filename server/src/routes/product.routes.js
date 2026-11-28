@@ -11,6 +11,13 @@ const router = express.Router();
  */
 router.get("/", async (req, res, next) => {
   try {
+    const cacheKey = `products:query:${JSON.stringify(req.query)}`;
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
+      return sendPaginated(res, cached.formatted, cached.total, cached.page, cached.limit);
+    }
+
     const {
       category,
       sub,
@@ -289,6 +296,8 @@ router.get("/", async (req, res, next) => {
       };
     });
 
+    cache.set(cacheKey, { formatted, total, page: Number(page), limit: Number(limit) }, 60);
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
     return sendPaginated(res, formatted, total, page, limit);
   } catch (err) {
     next(err);
@@ -300,6 +309,13 @@ router.get("/", async (req, res, next) => {
  */
 router.get("/featured", async (req, res, next) => {
   try {
+    const cacheKey = "products:featured:8";
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
+      return sendSuccess(res, cached);
+    }
+
     const products = await prisma.product.findMany({
       where: { isActive: true, isFeatured: true },
       take: 8,
@@ -326,6 +342,8 @@ router.get("/featured", async (req, res, next) => {
       reviewsCount: p.reviewsCount,
     }));
 
+    cache.set(cacheKey, formatted, 60);
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
     return sendSuccess(res, formatted);
   } catch (err) {
     next(err);
@@ -338,6 +356,12 @@ router.get("/featured", async (req, res, next) => {
 router.get("/:slug", async (req, res, next) => {
   try {
     const { slug } = req.params;
+    const cacheKey = `products:single:${slug}`;
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
+      return sendSuccess(res, cached);
+    }
 
     const product = await prisma.product.findFirst({
       where: {
@@ -489,6 +513,8 @@ router.get("/:slug", async (req, res, next) => {
       })),
     };
 
+    cache.set(cacheKey, formatted, 60);
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
     return sendSuccess(res, formatted);
   } catch (err) {
     next(err);
@@ -593,6 +619,8 @@ router.get("/:idOrSlug/related", async (req, res, next) => {
       image: r.images[0]?.url || "/images/furniture-placeholder.svg",
     }));
 
+    cache.set(cacheKey, formatted, 60);
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
     return sendSuccess(res, formatted);
   } catch (err) {
     next(err);
